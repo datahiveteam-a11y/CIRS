@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Intelligence Reporting Service (CIRS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CIRS is a civilian community information group that collects legally obtained, publicly visible information and passes it to official UK authorities.">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #111827;
+      --card: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --danger: #f97373;
+      --border: #1f2937;
+      --radius: 14px;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 900px;
+      background: linear-gradient(145deg, var(--bg-alt), #020617);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 26px 22px 26px;
+    }
+
+    @media (min-width: 720px) {
+      .page {
+        padding: 32px 34px 32px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 26px;
+        align-items: flex-start;
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .logo-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #1f2937 0, #020617 40%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1f2937;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .logo-wrap svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--accent);
+      filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.7));
+    }
+
+    .title-block {
+      flex: 1;
+    }
+
+    .title-block h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f9fafb;
+      margin-bottom: 4px;
+    }
+
+    .title-block h2 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .badge-note {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    main {
+      margin-top: 14px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, var(--accent-soft), var(--card));
+      border-radius: var(--radius);
+      border: 1px solid #111827;
+      padding: 18px 18px 16px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #cbd5f5;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8));
+    }
+
+    .chip.chip-danger {
+      border-color: rgba(248, 113, 113, 0.6);
+      color: #fecaca;
+    }
+
+    .list {
+      list-style: none;
+      margin-top: 6px;
+    }
+
+    .list li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .list li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      top: -1px;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .tagline span {
+      color: var(--accent);
+    }
+
+    .contact-card {
+      background: linear-gradient(145deg, #020617, #020617);
+      border-radius: var(--radius);
+      border: 1px solid #1f2937;
+      padding: 14px 16px 12px;
+      margin-top: 6px;
+    }
+
+    .contact-card h4 {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .contact-item {
+      font-size: 0.86rem;
+      color: #d1d5db;
+      margin-bottom: 4px;
+      word-break: break-all;
+    }
+
+    .contact-item span {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.68rem;
+      margin-right: 6px;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border-top: 1px solid #111827;
+      padding-top: 10px;
+      text-align: right;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Small screens */
+    @media (max-width: 480px) {
+      header {
+        flex-direction: row;
+        align-items: center;
+      }
+      .title-block h1 {
+        font-size: 1.2rem;
+      }
+      .page {
+        border-radius: 18px;
+        padding: 20px 18px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo-wrap" aria-hidden="true">
+        <!-- Simple eye logo in black/teal lines -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+          <path d="M6 32C11 22 20 14 32 14C44 14 53 22 58 32C53 42 44 50 32 50C20 50 11 42 6 32Z"
+                stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="32" cy="32" r="9" stroke-width="2.4" />
+          <circle cx="34.5" cy="28.5" r="2.2" stroke-width="1.6" />
+        </svg>
+      </div>
+      <div class="title-block">
+        <h2>Community Intelligence Reporting Service</h2>
+        <h1>CIRS</h1>
+        <p class="badge-note">Civilian Information Group • Not Law Enforcement</p>
+      </div>
+    </header>
+
+    <main class="content-grid">
+      <section>
+        <div class="card">
+          <h3>About the Project</h3>
+          <p>
+            The Community Intelligence Reporting Service (CIRS) is an <strong>independent civilian initiative</strong>.
+            Our sole purpose is to collect <strong>legally obtained, publicly visible information</strong> relating to
+            potential crime or safety concerns and relay it to the appropriate UK authorities.
+          </p>
+          <p>
+            CIRS has <strong>no law-enforcement powers</strong>, does not act as police or security, and does not
+            conduct undercover operations or private surveillance. All observations are made from public places only
+            and are reported through official channels such as the police or Crimestoppers.
+          </p>
+          <div class="chip-row">
+            <div class="chip">Civilian Only</div>
+            <div class="chip">Public Information</div>
+            <div class="chip">OSINT Friendly</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>How CIRS Operates</h3>
+          <p>Members of CIRS follow a strict, non-confrontational approach:</p>
+          <ul class="list">
+            <li>Observe and, where appropriate, record events only from places where the public is allowed to be.</li>
+            <li>Collect open-source information (OSINT) available on public platforms.</li>
+            <li>Avoid any involvement, encouragement, or participation in criminal activity.</li>
+            <li>Report relevant information to official UK authorities for them to handle.</li>
+          </ul>
+          <p class="tagline">
+            Our role is simple: <span>observe, document, and report</span>. The decisions and actions remain with the
+            legal authorities.
+          </p>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3>What CIRS Is Not</h3>
+          <ul class="list">
+            <li>Not a police force, security company, or government body.</li>
+            <li>Not authorised to detain, search, question, or arrest anyone.</li>
+            <li>Not permitted to enter private property or use hidden devices.</li>
+            <li>Not involved in undercover work, entrapment, or secret operations.</li>
+          </ul>
+          <div class="chip-row" style="margin-top:10px;">
+            <div class="chip chip-danger">No Enforcement Powers</div>
+            <div class="chip chip-danger">No Impersonation</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h4>Contact & Verification</h4>
+          <p class="contact-item">
+            <span>Website</span>
+            <!-- Replace this with your real InfinityFree URL -->
+            <a href="#" target="_blank" rel="noopener">https://yourcirsurl.example</a>
+          </p>
+          <p class="contact-item">
+            <span>Email</span>
+            <!-- Replace with your real email -->
+            info@cirs-project.example
+          </p>
+          <p class="contact-item">
+            <span>Status</span>
+            Independent civilian project operating within UK law.
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <p class="footer-note">
+      CIRS is an independent civilian information project. It is not affiliated with any police force,
+      government department, or official law-enforcement agency.
+    </p>
+  </div>
+</body>
+</html>
